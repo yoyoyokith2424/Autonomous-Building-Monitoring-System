@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED Control Dashboard</title>
+    <style>
+        body {
+            text-align: center;
+            padding: 50px;
+        }
+        button {
+            font-size: 24px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>LED Control Dashboard</h1>
+
+    <p>LED 1 is currently: <strong>{{ status1 }}</strong></p>
+    <button onclick="toggleLed('led1', 'OON1')">Turn ON LED 1</button>
+    <button onclick="toggleLed('led1', 'OFF2')">Turn OFF LED 1</button>
+
+    <p>LED 2 is currently: <strong>{{ status2 }}</strong></p>
+    <button onclick="toggleLed('led2', 'OON3')">Turn ON LED 2</button>
+    <button onclick="toggleLed('led2', 'OFF4')">Turn OFF LED 2</button>
+
+    <p>LED 3 is currently: <strong>{{ status3 }}</strong></p>
+    <button onclick="toggleLed('led3', 'OON5')">Turn ON LED 3</button>
+    <button onclick="toggleLed('led3', 'OFF6')">Turn OFF LED 3</button>
+
+    <p>LED 4 is currently: <strong>{{ status4 }}</strong></p>
+    <button onclick="toggleLed('led4', 'OON7')">Turn ON LED 4</button>
+    <button onclick="toggleLed('led4', 'OFF8')">Turn OFF LED 4</button>
+
+    <script>
+        function toggleLed(led, status) {
+            let data = {};
+            data[led] = status;
+
+            fetch('/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            });
+        }
+    </script>
+</body>
+</html>
